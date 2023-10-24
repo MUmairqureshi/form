@@ -9,3 +9,11 @@ export interface IApplyForm {
     email: string;
 
   }
+  
+export type TFields =
+| "firstName"
+| "lastName"
+| "phoneNumber"
+| "city"
+| "country"
+| "email"

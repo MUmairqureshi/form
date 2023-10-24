@@ -1,4 +1,4 @@
-import {  NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { db } from "../../components/lib/drizzle";
 import { eq, or, and } from "drizzle-orm";
 import { UsersTable , NewUser} from "../../components/lib/schema";
@@ -6,11 +6,7 @@ import { NextApiResponse } from "next";
 
 import { formCities ,formCountries } from "../../components/lib/data";
 import { IApplyForm } from "@/app/components/types";
-// import { DevBundlerService } from "next/dist/server/lib/dev-bundler-service";
-// import { createConnection } from "../nodeMailer";
-// // import { sendConfirmationEmail } from "@/lib/confirmationTemplates";
-// import { otpCodes } from "@/lib/schema/otpCodes";
-// import { sendConfirmationEmail } from "@/lib/confirmationTemplates";
+ 
 
 export async function POST(request: NextRequest, res: NextApiResponse){
 
@@ -23,6 +19,7 @@ export async function POST(request: NextRequest, res: NextApiResponse){
     email,
 
   } : IApplyForm = await request.json();
+
   if (firstName.length < 3 || firstName.length > 1000) {
     return NextResponse.json(
       {
@@ -83,11 +80,11 @@ export async function POST(request: NextRequest, res: NextApiResponse){
   }
 
 
-  const newForCountry = [...formCountries, "pakistan"];
-  if (!newForCities.includes(country)) {
+  const newForCountry = [...formCountries, "Pakistan"];
+  if (!newForCountry.includes(country)) {
     return NextResponse.json(
       {
-        message: "Invalid City!",
+        message: "Invalid Country!",
       },
       {
         status: 500,
@@ -128,15 +125,6 @@ export async function POST(request: NextRequest, res: NextApiResponse){
 
 
   try{
-    // const olduser = await db
-    // .select()
-    // .form(UsersTable)
-    // .where(
-    //   or(
-    //     eq(UsersTable.email , email),
-    //     eq(UsersTable.phoneNumber , phoneNumber)
-    //   )
-    // )
     const oldUsers = await db
     .select()
     .from(UsersTable)
@@ -146,8 +134,9 @@ export async function POST(request: NextRequest, res: NextApiResponse){
         eq(UsersTable.phoneNumber, phoneNumber)
       )
     );
+
     if(!oldUsers){
-      
+
       throw new Error("Internal Server Error");
     }
     const oldUser  = oldUsers[0];
@@ -182,52 +171,21 @@ export async function POST(request: NextRequest, res: NextApiResponse){
 }
 }
 
-
- 
-
-   
-
-   
- 
- 
+export async function GET(request: NextRequest) {
+  try {
 
 
-  // const appliedUser = {
-  //   firstName,
-  //   lastName,
-  //   phoneNumber,
-  //   city,
-  //   email,
-  //  highestQualification,
-  // };
+      const res = await db.select().from(UsersTable);
+console.log(res)
+      return NextResponse.json({ data: res })
+  } catch (err) {
+      console.log((err as { message: string }).message)
+      return NextResponse.json({ message: "Somthing went wrong" })
+  }
+}
 
-  // try {
-  //   const oldUsers = await db
-  //     .select()
-  //     .from(UsersTable)
-  //     .where(
-  //       or(
-  //         eq(UsersTable.email, email),
-  //         eq(UsersTable.phoneNumber, phoneNumber)
-  //       )
-  //     );
-  //   if (!oldUsers) {
-  //     throw new Error("Internal Server Error");
-  //   }
-  //   const oldUser = oldUsers[0];
-  //   if (!!oldUser && oldUser.email == email) {
-  //     throw new Error("An application with this email already exists.");
-  //   }  else if (!!oldUser && oldUser.phoneNumber == phoneNumber) {
-  //     throw new Error("An application with this Phone number already exists.");
-  //   }
 
-  // } catch (error) {
-  //   return NextResponse.json(
-  //     {
-  //       message: error.message,
-  //     },
-  //     {
-  //       status: 500,
-  //     }
-  //   );
-  // }
+
+
+
+

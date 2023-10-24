@@ -1,4 +1,5 @@
-// import { TFields } from "./types";
+import { TFields } from "../types";
+import type {  KeyboardEvent } from "react";
 
 export default function Input({
   id,
@@ -9,19 +10,17 @@ export default function Input({
   errors,
   occupiedErr,
   setOccupiedErr,
-})
-// : {
-//   id: TFields;
-//   placeholder: string;
-//   type: "text" | "number" | "email" | "date" | "tel";
-//   required?: boolean;
-//   register: any;
-//   errors: any;
-//   occupiedErr?: any;
-//   setOccupiedErr?: any;
-// })
- {
-  const handleKeyDown = (event) => {
+}: {
+  id: TFields;
+  placeholder: string;
+  type: "text" | "number" | "email" | "date" | "tel";
+  required?: boolean;
+  register: any;
+  errors: any;
+  occupiedErr?: any;
+  setOccupiedErr?: any;
+}) {
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.ctrlKey) return;
     const numericKeys = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
     const allowedKeys = [
@@ -41,7 +40,7 @@ export default function Input({
 
   return (
     <div className="my-6">
-      <label   className="mb-6 mt-4 text-slate-700 md:text-xl">
+      <label htmlFor={id} className="mb-6 mt-4 text-slate-700 md:text-xl">
         {placeholder} {required ? "*" : "(optional)"}
       </label>
 
@@ -56,26 +55,16 @@ export default function Input({
 
         <input
           type={type}
-          onKeyDown={
-            id === "email" ||
-            id === "phoneNumber" ||
-            id === "regNo"
-              ? handleKeyDown
-              : () => {}
-          }
+        
           id={id}
           maxLength={
-            id === "email"
-              ? "13"
-              : id === "phoneNumber"
+           
+              id === "phoneNumber"
               ? 10
-              : id === "otp"
-              ? 6
-              : id === "regNo"
-              ? 10
+             
               : ""
           }
-          max={type === "date" ? `${new Date().getFullYear() - 13}-12-29` : ""}
+          // max={type === "date" ? `${new Date().getFullYear() - 13}-12-29` : ""}
           className={`block h-12 w-full border border-gray-400 bg-gray-100 p-3 ${
             errors?.[id] || occupiedErr?.[id]
               ? "border-red-400 ring-red-500"
@@ -85,7 +74,7 @@ export default function Input({
           }`}
           placeholder={` ${placeholder}`}
           {...register(id, {
-            valueAsNumber: id === "cnic" || id === "phoneNumber" ? true : false,
+            valueAsNumber:  id === "phoneNumber" ? true : false,
           })}
           onFocus={
             !!occupiedErr?.[id]
@@ -93,10 +82,7 @@ export default function Input({
                   setOccupiedErr
                     ? setOccupiedErr({
                         phoneNumber: "",
-                        cnic: "",
                         email: "",
-                        otp: "",
-                        regNo: "",
                       })
                     : "";
                 }

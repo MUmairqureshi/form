@@ -7,6 +7,7 @@ import {
   index,
   uniqueIndex,
 } from 'drizzle-orm/pg-core';
+// import { InferModel } from "drizzle-o.rm";
 
 import { InferModel, desc } from "drizzle-orm";
 
@@ -38,3 +39,4 @@ export const UsersTable = pgTable(
   export type User = InferModel<typeof UsersTable>;
   export type NewUser = InferModel<typeof UsersTable, "insert">;;
   
+ 
