@@ -5,6 +5,7 @@ import {
   timestamp,
   integer,
   index,
+  date,
   uniqueIndex,
 } from 'drizzle-orm/pg-core';
 // import { InferModel } from "drizzle-o.rm";
@@ -23,6 +24,7 @@ export const UsersTable = pgTable(
       email: text("email").notNull(),
       createdAt: timestamp("created_at").defaultNow(),
       updatedAt: timestamp("updated_at").defaultNow(),
+      date: date('date').defaultNow(),
     },
     (users) => {
       return {

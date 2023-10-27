@@ -60,7 +60,7 @@ export default function Input({
           maxLength={
            
               id === "phoneNumber"
-              ? 10
+              ? 8
              
               : ""
           }

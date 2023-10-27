@@ -24,13 +24,9 @@ export default function Page() {
   const [formValues, setFormValues] = useState<any>();
   const [occupiedErr, setOccupiedErr] = useState({
     phoneNumber: "",
-    cnic: "",
+
     email: "",
-    otp: "",
-  });
-  const [showSocialInvitation, setShowSocialInvitation] = useState<
-    boolean | null
-  >(null);
+  }); 
 
  
   const {
@@ -66,10 +62,10 @@ export default function Page() {
       const resData: any = await res.json();
       if (!resData.users) throw new Error(resData.message);
 
-      // setFormValues({
-      //   ...formData,
-      //   ...(resData.users[0] && { users: resData.users[0] }),
-      // });
+      setFormValues({
+        ...formData,
+        ...(resData.users[0] && { users: resData.users[0] }),
+      });
 
       toast({
         title: `${resData.message}`,
@@ -82,7 +78,7 @@ export default function Page() {
       // localStorage.removeItem("twitter");
       // localStorage.removeItem("instagram");
 
-      // setIsApplied(true);
+      setIsApplied(true);
     } catch (err: any) {
       toast.closeAll();
       toast({

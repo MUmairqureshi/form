@@ -40,12 +40,12 @@ export async function POST(request: NextRequest, res: NextApiResponse){
       }
     );
   }
+console.log(phoneNumber.toString().length)
 
-
- if (phoneNumber.toString().length !== 12) {
+ if (phoneNumber.toString().length !== 10) {
     return NextResponse.json(
       {
-        message: "Invalid phone number length!",
+        message: "Invalids phone number length!",
       },
       {
         status: 500,
@@ -160,6 +160,7 @@ export async function POST(request: NextRequest, res: NextApiResponse){
 
 
 } catch (error : any) {
+  console.log("error" , error)
   return NextResponse.json(
     {
       message: error.message,
