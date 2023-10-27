@@ -1,14 +1,10 @@
- import Image from 'next/image'
-
- const API_URL = 'http://127.0.0.1:3000/api/applyform';
-
 
 import { User } from '@/app/components/lib/schema'
- import { useEffect, useState } from 'react';
+
 
  const getData = async () => {
     try {
-       const res = await fetch("http://127.0.0.1:3000/api/applyform", {
+       const res = await fetch("http://localhost:3000/api/applyform", {
            method: "GET",
            cache: "no-store",
            headers: {
@@ -24,10 +20,12 @@ import { User } from '@/app/components/lib/schema'
        console.log(err)
    }
 }
-
-  async function  Dashbord () {
-    const res: { data: User[] } = await getData();
-    
+interface data {
+    data : User[] 
+}
+ export default async function Dashbord   () {
+    const res: data = await getData();
+    console.log(res)
     return (
         <div className='bg-white py-20 px-4 w-full h-full'>
 
@@ -61,9 +59,10 @@ import { User } from '@/app/components/lib/schema'
                         </tr>
                     </thead>
                     <tbody>
-                        {res.data.map((data) => (<tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        {res.data.map((data  , id) => (
+                        <tr key={id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
 
-                            <th key={data.id} scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            <th  scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {data.id}
                             </th>
                             <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -89,7 +88,8 @@ import { User } from '@/app/components/lib/schema'
                             <td className="px-6 py-4">
 
                             </td>
-                        </tr>))}
+                        </tr>
+                        ))}
 
                     </tbody>
                 </table>
@@ -98,9 +98,7 @@ import { User } from '@/app/components/lib/schema'
         </div>
     )
 }
-
-export default Dashbord
-
+ 
 
 
 

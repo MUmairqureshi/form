@@ -19,7 +19,7 @@ export const mainFormSchema = yup.object({
     .string()
     .required("Phone Number is required")
     .min(2, "Please enter more then 10 characters")
-    .max(8, "Character limit reached, maximum allowed characters is 11."),
+    .max(8, "Character limit reached, maximum allowed characters is 8."),
   city: yup
     .string()
     .required("City is required")

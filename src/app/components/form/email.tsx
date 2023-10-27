@@ -14,7 +14,7 @@ export default function EmailAndOtpFields({
   register: any;
   errors: any;
   watch: UseFormWatch<any>;
-  occupiedErr: { email: string; otp: string };
+  occupiedErr: { email: string };
   setOccupiedErr: any;
 }) {
   const toast = useToast();
@@ -22,38 +22,12 @@ export default function EmailAndOtpFields({
   const [loading, setLoading] = useState<boolean>(false);
   const [resendOtpAvailable, setResendOtpAvailable] = useState<boolean>(true);
 
-  const sendOTP = async () => {
+  const email  = async () => {
     const email = watch("email");
     if (errors.email || !email) return;
     setLoading(true);
 
-    try {
-      const response = await fetch("/api/sendotp", {
-        body: JSON.stringify({ email }),
-        method: "POST",
-      });
-
-      const res = await response.json();
-      if (!response.ok) throw new Error(res.message);
-
-      setResendOtpAvailable(false);
-
-      toast({
-        title: `${res.message}`,
-        status: "success",
-        duration: 5000,
-        isClosable: true,
-      });
-    } catch (err: any) {
-      toast({
-        title: `${err.message || "Unknown Error"}`,
-        status: "error",
-        duration: 5000,
-        isClosable: false,
-      });
-    } finally {
-      setLoading(false);
-    }
+    
   };
   return (
     <div>

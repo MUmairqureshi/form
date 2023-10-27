@@ -3,7 +3,7 @@
 export interface IApplyForm {
     firstName: string;
     lastName: string;
-    phoneNumber: number;
+    phoneNumber: string;
     city: string;
     country : string
     email: string;

@@ -18,7 +18,7 @@ export const UsersTable = pgTable(
       id: serial("id").primaryKey().notNull(),
       firstName: text("first_name").notNull(),
       lastName: text("last_name").notNull(),
-      phoneNumber: integer("phone_number").notNull(),
+      phoneNumber: text("phone_number").notNull(),
       city: text("city").notNull(),
       country: text("country").notNull(),
       email: text("email").notNull(),
